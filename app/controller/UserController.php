@@ -57,10 +57,18 @@ class UserController extends BaseController
             return $this->response;
         }
 
-        $user->password = $this->security->hash((new Random())->base64Safe(4));
+        $password = (new Random())->base64Safe(4);
+
+        $user->password = $this->security->hash($password);
 
         try {
-            $user->save();
+            if ($user->save()) {
+                $this->emailer->send(
+                    $user->email,
+                    'New password',
+                    'This is your new password: ' . $password
+                );
+            }
         } catch (\Exception $e) {
             return $this->sendErrorResponse();
         }
