@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30 ное 2019 в 18:17
+-- Generation Time: 30 ное 2019 в 19:20
 -- Версия на сървъра: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -52,6 +52,17 @@ CREATE TABLE `patient` (
 -- --------------------------------------------------------
 
 --
+-- Структура на таблица `share`
+--
+
+CREATE TABLE `share` (
+  `id` varchar(36) NOT NULL,
+  `patient_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура на таблица `user`
 --
 
@@ -79,6 +90,13 @@ ALTER TABLE `blood_pressure`
 ALTER TABLE `patient`
   ADD PRIMARY KEY (`id`),
   ADD KEY `owner` (`user_id`) USING BTREE;
+
+--
+-- Indexes for table `share`
+--
+ALTER TABLE `share`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `patient_id` (`patient_id`);
 
 --
 -- Indexes for table `user`
@@ -124,6 +142,12 @@ ALTER TABLE `blood_pressure`
 --
 ALTER TABLE `patient`
   ADD CONSTRAINT `owner` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения за таблица `share`
+--
+ALTER TABLE `share`
+  ADD CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

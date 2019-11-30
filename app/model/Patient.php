@@ -23,6 +23,12 @@ class Patient extends Model
             'patient_id'
         );
 
+        $this->hasMany(
+            'id',
+            'Medico\Model\Share',
+            'patient_id'
+        );
+
         $this->belongsTo(
             'user_id',
             'Medico\Model\User',

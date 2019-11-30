@@ -16,9 +16,16 @@ $patientCollection->post('/patient', 'create');
 $patientCollection->put('/patient/{id}', 'update');
 $app->mount($patientCollection);
 
+$shareCollection = new MicroCollection();
+$shareCollection->setHandler('Medico\Controller\ShareController', true);
+$shareCollection->post('/patient/{id}/share', 'create');
+$shareCollection->delete('/patient/{id}/share/{code}', 'delete');
+$app->mount($shareCollection);
+
 $bpCollection = new MicroCollection();
 $bpCollection->setHandler('Medico\Controller\BloodPressureController', true);
 $bpCollection->post('/blood-pressure', 'create');
 $bpCollection->get('/blood-pressure', 'search');
+$bpCollection->get('/s/{code}', 'sharedSearch');
 $bpCollection->delete('/blood-pressure/{id}', 'delete');
 $app->mount($bpCollection);

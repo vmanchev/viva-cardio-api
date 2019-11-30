@@ -4,6 +4,7 @@ namespace Medico\Controller;
 
 use Medico\Controller\BaseController;
 use Medico\Service\Search\BloodPressure as BloodPressureSearch;
+use Medico\Model\Share as ShareModel;
 
 class BloodPressureController extends BaseController
 {
@@ -50,6 +51,24 @@ class BloodPressureController extends BaseController
         $this->response->setJsonContent($bloodPressureSearch->getResultSet());
 
         return $this->response;
+    }
+
+    public function sharedSearch($code) {
+        // lookup the share code
+        $shareModel = ShareModel::findFirstById($code);
+
+        if (!$shareModel) {
+            return $this->sendErrorResponse();
+        }
+
+        $bloodPressureSearch = new BloodPressureSearch([
+            'patient_id' => $shareModel->patient_id
+        ]);
+
+        $this->response->setJsonContent($bloodPressureSearch->getResultSet());
+
+        return $this->response;
+
     }
 
     public function delete($id)

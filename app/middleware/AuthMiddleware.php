@@ -24,13 +24,7 @@ class AuthMiddleware implements MiddlewareInterface
      */
     public function beforeHandleRoute(Event $event, Micro $app)
     {
-        $publicUrls = [
-            '/user/login',
-            '/user/forgot',
-            '/user'
-        ];
-
-        if (!in_array($app->request->getURI(), $publicUrls) && !$app->request->getHeader('Authorization')) {
+        if (!$this->allowFreeAccess($app) && !$app->request->getHeader('Authorization')) {
             $app->response->setStatusCode(401);
             return false;
         }
@@ -44,6 +38,23 @@ class AuthMiddleware implements MiddlewareInterface
                 return false;
             }
         }
+    }
+
+    private function allowFreeAccess(Micro $app): bool
+    {
+        $publicUrls = [
+            '/^\/user\/login$/',
+            '/^\/user\/forgot$/',
+            '/^\/user$/',
+            '/^\/s\/[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i'
+        ];
+
+
+        $matchedUrls = array_map(function ($pattern) use ($app) {
+            return !!preg_match($pattern, $app->request->getURI());
+        }, $publicUrls);
+
+        return !!count(array_filter($matchedUrls));
     }
 
     /**

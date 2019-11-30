@@ -283,6 +283,99 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Share",
+			"item": [
+				{
+					"name": "Share patient data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/patient/6/share",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient",
+								"6",
+								"share"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete patient share",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/patient/6/share/uuid",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient",
+								"6",
+								"share",
+								"uuid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access shared data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/s/3471ad90-c0da-4719-9781-873b8af4ec19",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"s",
+								"3471ad90-c0da-4719-9781-873b8af4ec19"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
