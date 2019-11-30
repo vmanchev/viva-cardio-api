@@ -1,0 +1,4 @@
+vendor/
+app/config/development.php
+app/config/staging.php
+app/config/production.php
