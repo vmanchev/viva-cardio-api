@@ -26,7 +26,6 @@ class UserController extends BaseController
 
     public function login()
     {
-
         $data = json_decode($this->request->getRawBody());
         $user = UserModel::findFirstByEmail($data->email);
 

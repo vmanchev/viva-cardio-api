@@ -14,5 +14,11 @@ return [
     ],
     'security' => [
         'hash' => ''
+    ],
+    'mailgun' => [
+        'apiKey' => '',
+        'endpoint' => '',
+        'domain' => '',
+        'from' => ''
     ]
 ];

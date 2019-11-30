@@ -4,6 +4,7 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Db\Adapter\Pdo\Mysql as PdoMysql;
 use Phalcon\Security;
 use Medico\Service\JwtService;
+use Medico\Service\MailerService;
 
 $di = new FactoryDefault();
 
@@ -46,4 +47,11 @@ $di->set(
         ];
     },
     true
+);
+
+$di->setShared(
+    'emailer',
+    function () use ($config) {
+        return new MailerService($config->mailgun);
+     }
 );
