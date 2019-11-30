@@ -40,7 +40,9 @@ $di->set(
     'config',
     function () use ($config) {
         return [
-            'hash' => $config->security->hash
+            'hash' => $config->security->hash,
+            'apiUrl' => $config->env->apiUrl,
+            'title' => $config->env->title,
         ];
     },
     true

@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'env' => [
+        'apiUrl' => '',
+        'title' => ''
+    ],
     'db' => [
         'host'     => '',
         'username' => '',

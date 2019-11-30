@@ -18,7 +18,8 @@ $app->mount($patientCollection);
 
 $shareCollection = new MicroCollection();
 $shareCollection->setHandler('Medico\Controller\ShareController', true);
-$shareCollection->post('/patient/{id}/share', 'create');
+$shareCollection->post('/patient/{id}/share/?{qr}', 'create');
+$shareCollection->get('/patient/{id}/share/{code}/qr', 'getQrCode');
 $shareCollection->delete('/patient/{id}/share/{code}', 'delete');
 $app->mount($shareCollection);
 
