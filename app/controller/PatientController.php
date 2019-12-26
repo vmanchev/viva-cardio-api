@@ -19,6 +19,9 @@ class PatientController extends BaseController
         try {
             $patient->save((array) $data);
             $this->response->setStatusCode(201);
+            $this->response->setJsonContent([
+              'patient' => $patient->toArray()
+            ]);
             return $this->response;
         } catch (\Exception $e) {
             $this->response->setStatusCode(409, $e->getMessage());
