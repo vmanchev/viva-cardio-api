@@ -4,6 +4,7 @@ namespace Medico\Controller;
 
 use Medico\Controller\BaseController;
 use Medico\Model\Patient as PatientModel;
+use Medico\Service\Search\Patients as PatientService;
 
 class PatientController extends BaseController
 {
@@ -44,5 +45,40 @@ class PatientController extends BaseController
             $this->response->setStatusCode(409, $e->getMessage());
             return $this->response;
         }
+    }
+
+    public function search($id = null)
+    {
+        if ($id > 0) {
+            return $this->getOne($id);
+        }
+
+        return $this->getOwnPatients();
+    }
+
+    private function getOne(int $id)
+    {
+        if (!$this->hasAccessToPatient($id)) {
+            return $this->sendErrorResponse();
+        }
+
+        $this->response->setJsonContent([
+            'patients' => [PatientModel::findFirst($id)],
+        ]);
+
+        $this->response->setStatusCode(200);
+        return $this->response;
+    }
+
+    private function getOwnPatients()
+    {
+        $patientService = new PatientService([
+            'user_id' => $this->request->loggedUser,
+        ]);
+
+        $this->response->setJsonContent($patientService->getResultSet());
+
+        $this->response->setStatusCode(200);
+        return $this->response;
     }
 }
