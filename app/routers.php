@@ -14,6 +14,7 @@ $patientCollection = new MicroCollection();
 $patientCollection->setHandler('Medico\Controller\PatientController', true);
 $patientCollection->post('/patient', 'create');
 $patientCollection->put('/patient/{id}', 'update');
+$patientCollection->delete('/patient/{id}', 'delete');
 $patientCollection->get('/patient/?{id}', 'search');
 $app->mount($patientCollection);
 

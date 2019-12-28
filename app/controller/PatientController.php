@@ -19,9 +19,7 @@ class PatientController extends BaseController
         try {
             $patient->save((array) $data);
             $this->response->setStatusCode(201);
-            $this->response->setJsonContent([
-              'patient' => $patient->toArray()
-            ]);
+            $this->response->setJsonContent($patient->toArray());
             return $this->response;
         } catch (\Exception $e) {
             $this->response->setStatusCode(409, $e->getMessage());
@@ -42,6 +40,25 @@ class PatientController extends BaseController
 
         try {
             $patient->update();
+            $this->response->setStatusCode(200);
+            $this->response->setJsonContent($patient->toArray());
+            return $this->response;
+        } catch (\Exception $e) {
+            $this->response->setStatusCode(409, $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function delete($id)
+    {
+        if (!$this->hasAccessToPatient($id)) {
+            return $this->sendErrorResponse();
+        }
+
+        $patient = PatientModel::findFirst($id);
+        
+        try {
+            $patient->delete();
             $this->response->setStatusCode(200);
             return $this->response;
         } catch (\Exception $e) {
