@@ -1,6 +1,6 @@
 {
     "require": {
-        "firebase/php-jwt": "^5.0",
+        "firebase/php-jwt": "^6.0",
         "codeitnowin/barcode": "^3.0",
         "mailgun/mailgun-php": "^3.0",
         "kriswallsmith/buzz": "^1.0",
